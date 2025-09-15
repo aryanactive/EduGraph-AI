@@ -1,14 +1,14 @@
 # graphrag_demo.py: Basic GraphRAG Demo for EduGraph AI
 # Uses OpenAI embeddings to create a sample knowledge graph from NCERT text.
-# Requires: pip install openai langchain
+# Requires: pip install openai langchain langchain-openai langchain-community faiss-cpu
 # Set your OpenAI API key as an environment variable: export OPENAI_API_KEY='your-key-here'
 
 import os
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import FAISS  # Simple vector store for demo (simulate graph)
-from langchain.schema import Document
+from langchain_openai import OpenAIEmbeddings  # Updated import for compatibility
+from langchain_community.vectorstores import FAISS  # Simple vector store for demo (simulate graph)
+from langchain_core.documents import Document  # Updated schema import
 from langchain.chains import RetrievalQA
-from langchain.llms import OpenAI
+from langchain_openai import OpenAI
 
 # Sample NCERT Text (Physics example: Newton's Laws)
 ncert_texts = [
@@ -19,7 +19,7 @@ ncert_texts = [
 ]
 
 # Initialize OpenAI Embeddings (from workshop: Building GraphRAG)
-embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
+embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("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"))
 
 # Create documents for embedding (simulate nodes in knowledge graph)
 docs = [Document(page_content=text) for text in ncert_texts]
